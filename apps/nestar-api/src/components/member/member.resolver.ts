@@ -4,9 +4,7 @@ import { MemberService } from './member.service';
 
 @Resolver()
 export class MemberResolver {
-    constructor(private readonly memberService: MemberService){
-
-    }
+    constructor(private readonly memberService: MemberService){}
 
     @Mutation(() => String)
     public async signup():Promise<string>{
