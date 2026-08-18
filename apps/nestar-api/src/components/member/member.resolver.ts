@@ -11,27 +11,17 @@ export class MemberResolver {
 
     @Mutation(() => Member)
     public async signup(@Args("input") input: MemberInput):Promise<Member>{
-      try{
-        console.log("signup")
-            return this.memberService.signup(input)
-      }
-      catch(error){
-        console.log(error)
-       throw new InternalServerErrorException(error)
-      }
+
+      console.log("signup")
+      return this.memberService.signup(input)}
         
-    }
+  
 
       @Mutation(() => Member)
     public async login(@Args("input") input: LoginInput):Promise<Member>{
-      try{
-        console.log("login")
-            return this.memberService.login(input)
-        
-          }    catch(error){
-        console.log(error)
-       throw new InternalServerErrorException(error)
-      }
+      
+      console.log("login")
+      return this.memberService.login(input)
     }
 
       @Mutation(() => String)
