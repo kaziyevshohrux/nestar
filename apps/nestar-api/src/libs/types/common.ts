@@ -19,3 +19,7 @@ export enum Message {
   PROVIDE_ALLOWED_PHOTO = "Please provide jpg, jpeg or png images!",
   SELF_SUBSCRIPTION_DENIED = "Self subscription is denied!",
 }
+
+export interface T {
+    [key: string]: any
+}

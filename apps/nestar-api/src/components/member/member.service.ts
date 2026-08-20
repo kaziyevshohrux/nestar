@@ -20,6 +20,7 @@ export class MemberService {
   try {
     const result = await this.memberModel.create(input);
 
+    result.accessToken = await this.authService.createToken(result)
     // TODO: Authentication via TOKEN
 
     return result;
@@ -51,6 +52,8 @@ export class MemberService {
   if (!isMatch) {
     throw new InternalServerErrorException(Message.WRONG_PASSWORD);
   }
+
+  response.accessToken = await this.authService.createToken(response)
 
   return response;
 }

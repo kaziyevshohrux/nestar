@@ -1,6 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import type { ObjectId } from 'mongoose';
 import { MemberAuthType, MemberStatus, MemberType } from '../../enums/member.enum';
+import { access } from 'fs';
 
 
 @ObjectType()
@@ -40,7 +41,7 @@ export class Member {
 	@Field(() => Int)
 	memberProperties?: number;
 
-	@Field(() => Int)
+	@Field(() => Int , {})
 	memberArticles?: number;
 
 	@Field(() => Int)
@@ -78,5 +79,8 @@ export class Member {
 
 	@Field(() => Date)
 	updatedAt?: Date;
+
+	@Field(( )=> String, { nullable: true})
+accessToken?: string
 
 }
