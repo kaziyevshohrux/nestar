@@ -6,3 +6,4 @@ export const shapeIntoMongoObjectId = (target: any) => {
 
 export const availableAgentSorts = ["createdAt", "updatedAt", "memberLikes", "memberViews", "memberRank"];
   
+export const availableMemberSorts = ["createdAt", "updatedAt", "memberLikes", "memberViews"]; //admin jami userlarni sort qiladir
