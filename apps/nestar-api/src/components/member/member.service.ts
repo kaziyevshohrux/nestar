@@ -4,7 +4,7 @@ import { Model, ObjectId } from 'mongoose';
 import { Member } from '../../libs/dto/member/member';
 import { LoginInput, MemberInput } from '../../libs/dto/member/member.input';
 import { MemberStatus } from '../../libs/enums/member.enum';
-import { Message } from '../../libs/types/common';
+import { Message, T } from '../../libs/types/common';
 import { AuthService } from '../auth/auth.service';
 import { MemberUpdate } from '../../libs/dto/member/member.update';
 
@@ -68,8 +68,17 @@ export class MemberService {
 		return result;
     }
 
-     public async getMember():Promise<string>{
-        return "getMember executed"
+    
+     public async getMember(targetId: ObjectId): Promise<Member> {
+		const search: T = {
+			_id: targetId,
+			memberStatus: {
+				$in: [MemberStatus.ACTIVE, MemberStatus.BLOCK],
+			},
+		};
+		const targetMember = await this.memberModel.findOne(search).exec();
+		if (!targetMember) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
+		return targetMember;
     }
 
 
