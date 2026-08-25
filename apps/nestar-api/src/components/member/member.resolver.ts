@@ -5,10 +5,11 @@ import { LoginInput, MemberInput } from '../../libs/dto/member/member.input';
 import { Member } from '../../libs/dto/member/member';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { AuthMember } from '../auth/decorators/authMember.decorator';
-import * as mongoose from 'mongoose';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { MemberType } from '../../libs/enums/member.enum';
+import { MemberUpdate } from '../../libs/dto/member/member.update';
+import * as mongoose from 'mongoose';
 
 
 @Resolver()
@@ -39,10 +40,12 @@ export class MemberResolver {
 	}
 
       @UseGuards(AuthGuard)
-      @Mutation(() => String)
-    public async updateMember(@AuthMember('_id') memberId: mongoose.ObjectId): Promise<string> {
+      @Mutation(() => Member)
+    public async updateMember(@Args('input') input : MemberUpdate,
+     @AuthMember('_id') memberId: mongoose.ObjectId ,): Promise<Member> {
         console.log("updateMember")
-            return this.memberService.updateMember()
+        delete input._id
+            return this.memberService.updateMember(memberId, input)
         
     }
 
