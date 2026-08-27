@@ -4,7 +4,7 @@ import { Model, ObjectId } from 'mongoose';
 import { Member, Members } from '../../libs/dto/member/member';
 import { AgentInquiry, LoginInput, MemberInput, MembersInquiry } from '../../libs/dto/member/member.input';
 import { MemberStatus, MemberType } from '../../libs/enums/member.enum';
-import { Direction, Message, T } from '../../libs/types/common';
+import { Direction, Message, StatisticModifier, T } from '../../libs/types/common';
 import { AuthService } from '../auth/auth.service';
 import { MemberUpdate } from '../../libs/dto/member/member.update';
 import { ViewInput } from '../../libs/dto/view/view.input';
@@ -171,6 +171,17 @@ export class MemberService {
 		const result = await this.memberModel.findOneAndUpdate({ _id: input._id }, input, { new: true }).exec();
 		if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
 		return result;
+	}
+
+
+
+
+	public async memberStatsEditor(input: StatisticModifier): Promise<Member> {
+		//memberga dahldor kerakli qiymatni ozgartirish imkonini beruvchi method
+		const { _id, targetKey, modifier } = input;
+		return (await this.memberModel
+			.findOneAndUpdate(_id, { $inc: { [targetKey]: modifier } }, { new: true })
+			.exec()) as Member; //masalan {memberProperties: 1}
 	}
 
 

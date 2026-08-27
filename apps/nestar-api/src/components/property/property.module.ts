@@ -5,6 +5,7 @@ import { AuthModule } from '../auth/auth.module';
 import { ViewModule } from '../view/view.module';
 import PropertySchema from '../../schemas/Property.model';
 import { PropertyResolver } from './property.resolver';
+import { MemberModule } from '../member/member.module';
 
 
 @Module({
@@ -12,8 +13,10 @@ import { PropertyResolver } from './property.resolver';
 		MongooseModule.forFeature([{ name: 'Property', schema: PropertySchema }]),
 		AuthModule, // <--- AuthModule shu yerda bo'lishi shart
 		ViewModule,
+    MemberModule,
 	],
 
 	providers: [PropertyResolver, PropertyService],
+  exports:[PropertyService]
 })
 export class PropertyModule {}

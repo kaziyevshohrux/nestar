@@ -1,4 +1,5 @@
 import { registerEnumType } from "@nestjs/graphql";
+import { ObjectId } from "mongoose";
 
 export enum Message {
   SOMETHING_WENT_WRONG = "Something went wrong!",
@@ -28,6 +29,12 @@ export enum Direction{ //agentlarni pasdan yuqorig yoki yuqoridan pasga qarab ta
 
 export interface T {
     [key: string]: any
+}
+
+export interface StatisticModifier {
+    _id: ObjectId;     //kerakli collectionning document idsi 
+    targetKey: string; //kerakli qiymatni ozgartiramiz.yani nimani
+    modifier: number;    //qanday qiymatga ozgartirmoqchimiz?
 }
 
 
