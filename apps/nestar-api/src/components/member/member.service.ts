@@ -19,6 +19,7 @@ export class MemberService {
   private viewService: ViewService
 ){}
 
+//SignUp
     public async signup(input: MemberInput): Promise<Member> {
   // TODO: Hash password
   input.memberPassword = await this.authService.hashPassword(input.memberPassword)
@@ -36,7 +37,7 @@ export class MemberService {
   }
 }
 
-
+//Login
    public async login(input: LoginInput): Promise<Member> {
   const { memberNick, memberPassword } = input;
 
@@ -64,6 +65,8 @@ export class MemberService {
   return response;
 }
 
+// update member inf
+
      public async updateMember(memberId: ObjectId, input: MemberUpdate): Promise<Member> {
 		const result = await this.memberModel
 			.findOneAndUpdate({ _id: memberId, memberStatus: MemberStatus.ACTIVE }, input, { new: true })
@@ -73,12 +76,12 @@ export class MemberService {
 		return result;
     }
 
-    
+//getMember 
     public async getMember(memberId: ObjectId, targetId: ObjectId): Promise<Member> {
 		const search: T = {
 			_id: targetId,
 			memberStatus: {
-				$in: [MemberStatus.ACTIVE, MemberStatus.BLOCK],
+			$in: [MemberStatus.ACTIVE, MemberStatus.BLOCK],
 			},
 		};
 		const targetMember = await this.memberModel.findOne(search).lean().exec(); //lean targetMemberni objectga aylantiradi.Korilayotgan odamni viewsi +1 ni amalga oshirish uchun lean ishlatdik
@@ -102,7 +105,7 @@ export class MemberService {
     }
 
 
-
+//get Agents
      public async getAgents(memberId: ObjectId, input: AgentInquiry): Promise<Members> {
 		const { text } = input.search;
 		const match: T = { memberType: MemberType.AGENT, memberStatus: MemberStatus.ACTIVE };
@@ -132,7 +135,7 @@ export class MemberService {
     }
 
     
-
+//getAgents Admin 
     	public async getAllMembersByAdmin(input: MembersInquiry): Promise<Members> {
 		const { memberStatus, memberType, text } = input.search;
 		const match: T = {};
@@ -162,6 +165,8 @@ export class MemberService {
 		return result[0];
 	}
 
+
+// updateMember by admin 
 	public async updateMemberByAdmin(input: MemberUpdate): Promise<Member> {
 		const result = await this.memberModel.findOneAndUpdate({ _id: input._id }, input, { new: true }).exec();
 		if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
