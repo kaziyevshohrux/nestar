@@ -8,6 +8,7 @@ import { BoardArticleModule } from './board-article/board-article.module';
 import { MemberModule } from './member/member.module';
 import { PropertyModule } from './property/property.module';
 import { Module } from '@nestjs/common';
+import { PropertyModule } from './property/property.module';
 
 @Module({
     imports: [

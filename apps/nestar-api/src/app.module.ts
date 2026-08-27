@@ -7,6 +7,7 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { AppResolver } from './app.resolver';
 import { DatabaseModule } from './database/database.module';
 import { ComponentModule } from './components/components.module';
+import { PropertyModule } from './components/property/property.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ const graphqlFormattedError = {
     }),
    ComponentModule,
     DatabaseModule,
-  ],
+      DatabaseModule, PropertyModule], //Databasega ulanish mantigi yozilgan module.Uni alohida tashkillashtirdik sababi loyiha ishga tushganda databasega connect 1 marta amalga oshadi va yakunlanadi
+  
   controllers: [AppController],
   providers: [AppService ,AppResolver],
 })
