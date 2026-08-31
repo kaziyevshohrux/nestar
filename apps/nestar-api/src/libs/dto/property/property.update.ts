@@ -1,14 +1,13 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsInt, IsNotEmpty, IsOptional, Length, Min } from 'class-validator';
 import * as mongoose from 'mongoose';
-import * as {ObjectId} from "mongoose"
 import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
 
 @InputType()
 export class PropertyUpdate {
 	@IsNotEmpty()
 	@Field(() => String)
-	_id: ObjectId;
+	_id: mongoose.ObjectId;
 
 	@IsOptional()
 	@Field(() => PropertyType, { nullable: true })
