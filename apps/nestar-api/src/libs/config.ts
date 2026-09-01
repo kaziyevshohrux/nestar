@@ -10,6 +10,7 @@ export const availableAgentSorts = ["createdAt", "updatedAt", "memberLikes", "me
   
 export const availableMemberSorts = ["createdAt", "updatedAt", "memberLikes", "memberViews"]; //admin jami userlarni sort qiladir
 
+export const availableCommentSorts = ['createdAt', 'updatedAt'];
 
 
  // IMAGE CONFIGURATION 
