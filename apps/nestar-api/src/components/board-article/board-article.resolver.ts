@@ -12,6 +12,7 @@ import { BoardArticleUpdate } from '../../libs/dto/board-article/board-article.u
 import { MemberType } from '../../libs/enums/member.enum';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { Comment } from '../../libs/dto/comment/comment';
 
 @Resolver()
 export class BoardArticleResolver {
@@ -39,7 +40,7 @@ export class BoardArticleResolver {
 	}
 
 	@UseGuards(AuthGuard)
-	@Mutation(() => BoardArticle)
+	@Mutation((returns) => BoardArticle)
 	public async updateBoardArticle(
 		@Args('input') input: BoardArticleUpdate,
 		@AuthMember('_id') memberId: mongoose.ObjectId,
@@ -76,7 +77,7 @@ export class BoardArticleResolver {
 
 	@Roles(MemberType.ADMIN)
 	@UseGuards(RolesGuard)
-	@Mutation(() => BoardArticle)
+	@Mutation((returns) => BoardArticle)
 	public async updateBoardArticleByAdmin(
 		@Args('input') input: BoardArticleUpdate,
 		@AuthMember('_id') memberId: mongoose.ObjectId,
