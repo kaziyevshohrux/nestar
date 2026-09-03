@@ -10,7 +10,7 @@ import { MemberModule } from '../member/member.module';
   imports: [
 		MongooseModule.forFeature([{ name: 'Follow', schema: FollowSchema }]),
 		AuthModule,
-		MemberModule,
+		forwardRef(() => MemberModule),
 	],
   providers: [FollowResolver, FollowService],
   exports: [FollowService]

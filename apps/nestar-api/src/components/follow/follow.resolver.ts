@@ -8,7 +8,8 @@ import { AuthMember } from '../auth/decorators/authMember.decorator';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { WithoutGuard } from '../auth/guards/without.guard';
 import { shapeIntoMongoObjectId } from '../../libs/config';
-import type { ObjectId } from '../../libs/types/common';
+import { ObjectId } from 'mongoose';
+
 
 @Resolver()
 export class FollowResolver {
