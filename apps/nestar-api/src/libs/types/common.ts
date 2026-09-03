@@ -37,5 +37,5 @@ export interface StatisticModifier {
     modifier: number;    //qanday qiymatga ozgartirmoqchimiz?
 }
 
-
+export type ObjectId = import('mongoose').Types.ObjectId;
 registerEnumType(Direction,{name: 'Direction'})
