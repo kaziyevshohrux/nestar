@@ -81,32 +81,49 @@ export class MemberService {
     }
 
 //getMember 
-    public async getMember(memberId: ObjectId, targetId: ObjectId): Promise<Member> {
-		const search: T = {
-			_id: targetId,
-			memberStatus: {
-			$in: [MemberStatus.ACTIVE, MemberStatus.BLOCK],
-			},
-		};
-		const targetMember = await this.memberModel.findOne(search).lean().exec(); //lean targetMemberni objectga aylantiradi.Korilayotgan odamni viewsi +1 ni amalga oshirish uchun lean ishlatdik
-		if (!targetMember) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
+   public async getMember(memberId: ObjectId, targetId: ObjectId): Promise<Member> {
+  const search: T = {
+    _id: targetId,
+    memberStatus: {
+      $in: [MemberStatus.ACTIVE, MemberStatus.BLOCK],
+    },
+  };
 
-		if (memberId) {
-			const viewInput: ViewInput = {
-				memberId: memberId,
-				viewRefId: targetId,
-				viewGroup: ViewGroup.MEMBER,
-			};
-			const newView = await this.viewService.recordView(viewInput);
-			if (newView) {
-				await this.memberModel.findOneAndUpdate(search, { $inc: { memberViews: 1 } }, { new: true }).exec();
-				targetMember.memberViews++;
-			}
-			//incraese memberView
-		}
+  const targetMember : Member | null  = await this.memberModel.findOne(search).lean().exec();
+  if (!targetMember) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
 
-		return targetMember;
+  if (memberId) {
+    const viewInput = {
+      memberId: memberId,
+      viewRefId: targetId,
+      viewGroup: ViewGroup.MEMBER,
+    };
+
+    const newView = await this.viewService.recordView(viewInput);
+
+    if (newView) {
+      await this.memberModel.findOneAndUpdate(
+        search,
+        { $inc: { memberViews: 1 } },
+        { new: true }
+      ).exec();
+
+      targetMember.memberViews++;
     }
+
+    const likeInput = {
+      memberId: memberId,
+      likeRefId: targetId,
+      likeGroup: LikeGroup.MEMBER,
+    };
+
+    targetMember.meLiked = await this.likeService.checkLikeExistence(likeInput);
+
+    // meFollowed
+  }
+
+  return targetMember;
+}
 
 
 
