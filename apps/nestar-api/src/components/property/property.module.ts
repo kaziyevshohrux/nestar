@@ -6,6 +6,8 @@ import { ViewModule } from '../view/view.module';
 import PropertySchema from '../../schemas/Property.model';
 import { PropertyResolver } from './property.resolver';
 import { MemberModule } from '../member/member.module';
+import { LikeService } from '../like/like.service';
+import { LikeModule } from '../like/like.module';
 
 
 @Module({
@@ -14,6 +16,7 @@ import { MemberModule } from '../member/member.module';
 		AuthModule, // <--- AuthModule shu yerda bo'lishi shart
 		ViewModule,
     MemberModule,
+	LikeModule,
 	],
 
 	providers: [PropertyResolver, PropertyService],
