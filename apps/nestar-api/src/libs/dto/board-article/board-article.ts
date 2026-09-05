@@ -1,13 +1,13 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BoardArticleCategory, BoardArticleStatus } from '../../enums/board-article.enum';
-import { ObjectId } from 'mongoose';
+import * as mongoose from 'mongoose';
 import { Member, TotalCounter } from '../member/member';
 import { MeLiked } from '../like/like';
 
 @ObjectType()
 export class BoardArticle {
 	@Field(() => String)
-	_id: ObjectId;
+	_id: mongoose.ObjectId;
 
 	@Field(() => BoardArticleCategory)
 	articleCategory: BoardArticleCategory;
@@ -34,7 +34,7 @@ export class BoardArticle {
 	articleComments: number;
 
 	@Field(() => String)
-	memberId: ObjectId;
+	memberId: mongoose.ObjectId;
 
 	@Field(() => Date)
 	createdAt: Date;

@@ -15,7 +15,7 @@ import { ViewGroup } from '../../libs/enums/view.enum';
 import { Direction, Message, StatisticModifier, T } from '../../libs/types/common';
 import { PropertyUpdate } from '../../libs/dto/property/property.update';
 import moment from 'moment';
-import { lookupMember, shapeIntoMongoObjectId } from '../../libs/config';
+import { lookupAuthMemberLiked, lookupMember, shapeIntoMongoObjectId } from '../../libs/config';
 import { LikeInput } from '../../libs/dto/like/like.input';
 import { LikeService } from '../like/like.service';
 @Injectable()
@@ -70,11 +70,14 @@ export class PropertyService {
     return targetProperty;
 }
 
-	public async propertyStatsEditor(input: StatisticModifier): Promise<Property> {
-		const { _id, targetKey, modifier } = input;
-		return await this.propertyModel.findByIdAndUpdate(_id, { $inc: { [targetKey]: modifier } }, { new: true }).exec();
-	}
-
+public async propertyStatsEditor(input: StatisticModifier): Promise<Property> {
+    const { _id, targetKey, modifier } = input;
+    const result = await this.propertyModel
+        .findByIdAndUpdate(_id, { $inc: { [targetKey]: modifier } }, { new: true })
+        .exec();
+    if (!result) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
+    return result;
+}
 
 
 
@@ -123,6 +126,7 @@ export class PropertyService {
 						list: [
 							{ $skip: (input.page - 1) * input.limit },
 							{ $limit: input.limit },
+							lookupAuthMemberLiked(memberId),
 							lookupMember,
 							{ $unwind: '$memberData' },
 						],

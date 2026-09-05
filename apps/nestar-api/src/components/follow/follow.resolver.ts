@@ -8,7 +8,7 @@ import { AuthMember } from '../auth/decorators/authMember.decorator';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { WithoutGuard } from '../auth/guards/without.guard';
 import { shapeIntoMongoObjectId } from '../../libs/config';
-import { ObjectId } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 
 @Resolver()
@@ -17,7 +17,7 @@ export class FollowResolver {
 
      	@UseGuards(AuthGuard)
 	@Mutation(() => Follower)
-	public async subscribe(@Args('input') input: string, @AuthMember('_id') memberId: ObjectId): Promise<Follower> {
+	public async subscribe(@Args('input') input: string, @AuthMember('_id') memberId: mongoose.ObjectId): Promise<Follower> {
 		console.log('Mutation: subscribe');
 		const followingId = shapeIntoMongoObjectId(input);
 		return await this.followService.subscribe(memberId, followingId);
@@ -25,7 +25,7 @@ export class FollowResolver {
 
 	@UseGuards(AuthGuard)
 	@Mutation(() => Follower)
-	public async unsubscribe(@Args('input') input: string, @AuthMember('_id') memberId: ObjectId): Promise<Follower> {
+	public async unsubscribe(@Args('input') input: string, @AuthMember('_id') memberId: mongoose.ObjectId): Promise<Follower> {
 		console.log('Mutation: unsubscribe');
 		const followingId = shapeIntoMongoObjectId(input);
 		return await this.followService.unsubscribe(memberId, followingId);
@@ -35,7 +35,7 @@ export class FollowResolver {
 	@Query(() => Followings)
 	public async getMemberfollowings(
 		@Args('input') input: FollowInquiry,
-		@AuthMember('memberId') memberId: ObjectId,
+		@AuthMember('memberId') memberId: mongoose.ObjectId,
 	): Promise<Followings> {
 		console.log('Query: getMemberfollowings');
 		const { followerId } = input.search;
@@ -48,7 +48,7 @@ export class FollowResolver {
 	@Query(() => Followers)
 	public async getMemberFollowers(
 		@Args('input') input: FollowInquiry,
-		@AuthMember('_id') memberId: ObjectId,
+		@AuthMember('_id') memberId: mongoose.ObjectId,
 	): Promise<Followers> {
 		console.log('Query: getMemberFollowers');
 		const { followingId } = input.search;
