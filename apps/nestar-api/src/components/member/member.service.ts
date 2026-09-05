@@ -15,6 +15,7 @@ import { LikeGroup } from '../../libs/enums/like.enum';
 import { LikeService } from '../like/like.service';
 import { Follower, Following, MeFollowed } from '../../libs/dto/follow/follow';
 import { FollowService } from '../follow/follow.service';
+import { lookupAuthMemberLiked } from '../../libs/config';
 
 @Injectable()
 export class MemberService {
@@ -173,7 +174,11 @@ public async likeTargetMember(memberId: ObjectId, likeRefId: ObjectId): Promise<
 				{
 					$facet: {
 						//bir aggregate ichida bir nechta query natijalarini olish imkonini beradi
-						list: [{ $skip: (input.page - 1) * input.limit }, { $limit: input.limit }], //talab etilgan agentlar royxatini olib beradi
+						list: [{ $skip: (input.page - 1) * input.limit },
+							 { $limit: input.limit },
+							 lookupAuthMemberLiked(memberId)
+							], //talab etilgan agentlar royxatini olib beradi
+
 						metaCounter: [{ $count: 'total' }], //agentlar umumiy sonini hisoblaymiz
 					},
 				},
