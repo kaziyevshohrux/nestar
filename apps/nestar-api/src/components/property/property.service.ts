@@ -4,7 +4,7 @@ import { Model, ObjectId } from 'mongoose';
 import { Member } from '../../libs/dto/member/member';
 import { Properties, Property } from '../../libs/dto/property/property';
 import { MemberService } from '../member/member.service';
-import { AgentPropertiesInquiry, AllPropertiesInquiry, PropertiesInquiry, PropertyInput } from '../../libs/dto/property/property.input';
+import { AgentPropertiesInquiry, AllPropertiesInquiry, OrdinaryInquiry, PropertiesInquiry, PropertyInput } from '../../libs/dto/property/property.input';
 ;
 import { ViewService } from '../view/view.service';
 import { PropertyStatus } from '../../libs/enums/property.enum';
@@ -170,6 +170,11 @@ public async propertyStatsEditor(input: StatisticModifier): Promise<Property> {
 				return { [ele]: true };
 			});
 		}
+	}
+
+
+	public async getFavorites(memberId: ObjectId, input: OrdinaryInquiry): Promise<Properties>{
+		return await this.likeService.getFavoriteProperties(memberId, input)
 	}
 
 
