@@ -59,7 +59,7 @@ export class LikeService {
 					list: [
 						 {$skip: (page-1) *limit},
 						 {$limit: limit},lookupFavorite,
-						 {$unwind: "$FavoriteProperty"}, 
+						 {$unwind: "$favoriteProperty"}, 
 					],
 					metaCounter: [{$count: "total"}],
 				},

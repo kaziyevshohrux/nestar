@@ -177,6 +177,11 @@ public async propertyStatsEditor(input: StatisticModifier): Promise<Property> {
 		return await this.likeService.getFavoriteProperties(memberId, input)
 	}
 
+	public async getVisited(memberId: ObjectId, input: OrdinaryInquiry): Promise<Properties>{
+		return await this.viewService.getVisitedProperties(memberId, input)
+	}
+
+
 
 	public async getAgentProperties(memberId: ObjectId, input: AgentPropertiesInquiry): Promise<Properties> {
 		const { propertyStatus } = input.search;
