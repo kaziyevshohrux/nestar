@@ -16,17 +16,17 @@ handleTimeOut(){
   this.logger.debug('BATCH SERVER READY')
 }
 
-@Cron('40 * * * * *', {name: BATCH_ROLLBACK})
-public async batchRollBack(){
+@Cron('00 00 01 * * *', {name: BATCH_ROLLBACK})
+public async batchRollback(){
   try{
    this.logger['context'] =BATCH_ROLLBACK
    this.logger.debug("EXECUTED")
-   await this.batchService.batchRollBack()
+   await this.batchService.batchRollback()
 }catch(err){
   this.logger.error(err)
 }}
 
-@Cron('45 * * * * *', {name: BATCH_TOP_PROPERTIES})
+@Cron('20 00 01 * * *', {name: BATCH_TOP_PROPERTIES})
 public async batchTopProperties(){
   try{
    this.logger['context'] = BATCH_TOP_PROPERTIES
@@ -37,7 +37,7 @@ public async batchTopProperties(){
 }}
 
 
-@Cron('50 * * * * *', {name: BATCH_TOP_AGENTS})
+@Cron('40 00 01 * * *', {name: BATCH_TOP_AGENTS})
 public async batchTopAgents(){
   try{
    this.logger['context'] =BATCH_TOP_AGENTS
@@ -46,6 +46,7 @@ public async batchTopAgents(){
 }catch(err){
   this.logger.error(err)
 }}
+
 /*
 @Interval(1000)
   handleInterval(){
