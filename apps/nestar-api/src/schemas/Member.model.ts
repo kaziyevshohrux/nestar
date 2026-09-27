@@ -14,6 +14,23 @@ const MemberSchema = new Schema(
       default: MemberType.USER,
     },
 
+    memberFullName: {
+      type: String,
+    },
+
+    memberAddress: {
+      type: String,
+    },
+
+    memberDesc: {
+      type: String,
+    },
+
+    memberImage: {
+      type: String,
+      default: '',
+  },
+
     memberStatus: {
       type: String,
       enum: MemberStatus,
@@ -42,15 +59,6 @@ const MemberSchema = new Schema(
       type: String,
       select: false,
       required: true,
-    },
-
-    memberFullName: {
-      type: String,
-    },
-
-    memberImage: {
-      type: String,
-      default: '',
     },
 
     memberProperties: {

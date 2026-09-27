@@ -50,6 +50,7 @@ export class LikeService {
 					localField: "likeRefId",
 					foreignField:"_id",
 					as: "favoriteProperty",
+					
 
 				},
 			},
@@ -58,8 +59,10 @@ export class LikeService {
 				$facet:{
 					list: [
 						 {$skip: (page-1) *limit},
-						 {$limit: limit},lookupFavorite,
+						 {$limit: limit},
+						 lookupFavorite,
 						 {$unwind: "$favoriteProperty"}, 
+						 {$unwind: "$favoriteProperty.memberData"},
 					],
 					metaCounter: [{$count: "total"}],
 				},

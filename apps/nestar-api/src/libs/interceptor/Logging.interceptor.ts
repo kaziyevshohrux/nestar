@@ -34,7 +34,7 @@ export class LoggingInterceptor implements NestInterceptor {
 	}
 
 	private stringify(context: ExecutionContext): string {
-		return JSON.stringify(context).slice(0, 75); //req.bodyni objectdan jsonga ogirib oldik.0 dan 75 harfgacha kesib oldik
+		return JSON.stringify(context).slice(0, 160); //req.bodyni objectdan jsonga ogirib oldik.0 dan 75 harfgacha kesib oldik
 	}
 }
 

@@ -33,9 +33,9 @@ export class FollowResolver {
 
 	@UseGuards(WithoutGuard)
 	@Query(() => Followings)
-	public async getMemberfollowings(
+	public async getMemberFollowings(
 		@Args('input') input: FollowInquiry,
-		@AuthMember('memberId') memberId: mongoose.ObjectId,
+		@AuthMember('_id') memberId: mongoose.ObjectId,
 	): Promise<Followings> {
 		console.log('Query: getMemberfollowings');
 		const { followerId } = input.search;

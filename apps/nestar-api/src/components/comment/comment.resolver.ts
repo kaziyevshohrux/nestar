@@ -5,7 +5,7 @@ import { MemberType } from "../../libs/enums/member.enum";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { shapeIntoMongoObjectId } from "../../libs/config";
 import mongoose from "mongoose";
-import { Comments } from "../../libs/dto/comment/comment";
+import { Comments, Comment } from "../../libs/dto/comment/comment";
 import { CommentInput, CommentsInquiry } from "../../libs/dto/comment/comment.input";
 import { CommentUpdate } from "../../libs/dto/comment/comment.update";
 import { AuthMember } from "../auth/decorators/authMember.decorator";
@@ -17,7 +17,7 @@ import { CommentService } from "./comment.service";
 export class CommentResolver {constructor(private readonly commentService: CommentService) {}
 
 	@UseGuards(AuthGuard)
-	@Mutation((returns) => Comments)
+	@Mutation((returns) => Comment)
 	public async createComment(
 		@Args('input') input: CommentInput,
 		@AuthMember('_id') memberId: mongoose.ObjectId,
@@ -27,7 +27,7 @@ export class CommentResolver {constructor(private readonly commentService: Comme
 	}
 
 	@UseGuards(AuthGuard)
-	@Mutation((returns) => Comments)
+	@Mutation((returns) => Comment)
 	public async updateComment(
 		@Args('input') input: CommentUpdate,
 		@AuthMember('_id') memberId: mongoose.ObjectId,

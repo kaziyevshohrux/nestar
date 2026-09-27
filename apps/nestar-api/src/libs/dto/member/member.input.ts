@@ -64,7 +64,7 @@ export class AgentInquiry{
     limit: number;
 
     @IsOptional()
-    @IsIn([availableAgentSorts]) //userlar agentlarni shu parametrlar boyicha sort qiladi
+    @IsIn(availableAgentSorts) //userlar agentlarni shu parametrlar boyicha sort qiladi
     @Field(() => String, {nullable: true}) //sorting mexanizm uchun
     sort?: string;
 
@@ -73,7 +73,7 @@ export class AgentInquiry{
     direction?: Direction;
 
     @IsNotEmpty()
-    @Field(() => AIsearch)
+    @Field(() => AIsearch , {nullable: true})
     search: AIsearch;
 }
 
@@ -105,7 +105,7 @@ export class MembersInquiry{
     limit: number;
 
     @IsOptional()
-    @IsIn([availableMemberSorts]) //userlar agentlarni shu parametrlar boyicha sort qiladi
+    @IsIn(availableMemberSorts) //userlar agentlarni shu parametrlar boyicha sort qiladi
     @Field(() => String, {nullable: true}) //sorting mexanizm uchun
     sort?: string;
 

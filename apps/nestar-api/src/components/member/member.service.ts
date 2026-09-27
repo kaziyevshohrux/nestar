@@ -161,7 +161,7 @@ public async likeTargetMember(memberId: ObjectId, likeRefId: ObjectId): Promise<
      public async getAgents(memberId: ObjectId, input: AgentInquiry): Promise<Members> {
 		const { text } = input.search;
 		const match: T = { memberType: MemberType.AGENT, memberStatus: MemberStatus.ACTIVE };
-		const sort: T = { [input?.sort ?? 'createdAt']: input.direction ?? Direction.DESC }; //sort optionalligi sababli agar kiritilmagan bolsa createdAt avtomatik tanlanadi
+		const sort: T = { [input?.sort ?? 'createdAt']: input.direction ?? Direction.DESC ? -1: 1 }; //sort optionalligi sababli agar kiritilmagan bolsa createdAt avtomatik tanlanadi
 
 		if (text) match.memberNick = { $regex: new RegExp(text, 'i') };
 		console.log('match', match);
@@ -240,7 +240,7 @@ public async likeTargetMember(memberId: ObjectId, likeRefId: ObjectId): Promise<
 		//memberga dahldor kerakli qiymatni ozgartirish imkonini beruvchi method
 		const { _id, targetKey, modifier } = input;
 		return (await this.memberModel
-			.findOneAndUpdate(_id, { $inc: { [targetKey]: modifier } }, { new: true })
+			.findOneAndUpdate({ _id }, { $inc: { [targetKey]: modifier } }, { new: true })
 			.exec()) as Member; //masalan {memberProperties: 1}
 	}
 
