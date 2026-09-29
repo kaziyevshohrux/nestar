@@ -74,7 +74,7 @@ return result;
    {
     new: true,
    },
-  );
+  ).exec();
   if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
   return result;
  }
@@ -99,7 +99,7 @@ public async getComments(memberId: ObjectId, input: CommentsInquiry): Promise<Co
      metaCounter: [{ $count: 'total' }],
     },
    },
-  ]);
+  ]).exec()
   if (!result.length) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
 
   return result[0];
@@ -110,7 +110,7 @@ public async getComments(memberId: ObjectId, input: CommentsInquiry): Promise<Co
 
 	public async removeCommentByAdmin(input: ObjectId): Promise<Comment> {
 		//comment article yokiproperty kabi muhim malumot emas shu sababli uni statusini delete ekanligini tekshirishga hojat yoq
-		const result = await this.commentModel.findByIdAndDelete(input);
+		const result = await this.commentModel.findByIdAndDelete(input).exec();
 		if (!result) throw new InternalServerErrorException(Message.REMOVE_FAILED);
 		return result;
 	}
